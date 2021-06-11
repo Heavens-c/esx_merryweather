@@ -72,26 +72,16 @@ AddEventHandler('esx_customrob:robberyStarted', function(currentStore)
 				SetTimeout(store.secondsRemaining * 1000, function()
 					if robbers[_source] then
 						rob = false
-						local chance = math.random(1, 100)
+						--local chance = math.random(1, 100)
+								
 						if xPlayer then
 							TriggerClientEvent('esx_customrob:robberyComplete', _source)
 
-							if chance >= 1 and chance <= 5 then
-								xPlayer.addWeapon('WEAPON_MICROSMG', 50)
-							elseif chance >= 6 and chance <= 10 then
-								xPlayer.addWeapon('WEAPON_SMG', 50)
-							elseif chance <= 25 and chance >= 11 then
-								xPlayer.addInventoryItem('cokebrick', 1)
-							elseif chance <= 50 and chance >= 26 then
-								xPlayer.addInventoryItem('weed20g', 2)
-								xPlayer.addAccountMoney('black_money', 20000)
-							elseif chance <= 100 and chance >= 91 then
-								xPlayer.addInventoryItem('methburn', 1)
-							elseif chance <= 90 and chance >= 51 then
-								xPlayer.addInventoryItem('cuttertorch', 2)
-								xPlayer.addInventoryItem('coke1g', 10)
+							if Config.GiveBlackMoney then
+								xPlayer.addAccountMoney('black_money', store.reward)
+							else
+								--xPlayer.addMoney(store.reward)
 							end
-							
 							local xPlayers, xPlayer = ESX.GetPlayers(), nil
 							for i=1, #xPlayers, 1 do
 								xPlayer = ESX.GetPlayerFromId(xPlayers[i])
